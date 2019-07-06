@@ -110,7 +110,7 @@ This guide uses Windows as an OS to extract data from the PS3 backup, but this s
 
 ### PC: Install Necessary Tools
 * Install [PS3Xport][7] onto the PC by extracting its archive file.
-* In its main folder create an empty text file, rename it to `ExtractPSID.cmd` and put the following content into it:
+* In its main folder create an empty text file, rename it to [`ExtractPSID.cmd`](#file-extractpsid-cmd) and put the following content into it:
 ```dos
 @echo off
 @cd /d "%~dp0\Tools"
@@ -119,7 +119,7 @@ PS3Xport.exe ExtractPSID "%~1" ..\psid.bin
 
 @pause
 ```
-* In its main folder create an empty text file, rename it to `ExtractIndexes.cmd` and put the following content into it:
+* In its main folder create an empty text file, rename it to [`ExtractIndexes.cmd`](#file-extractindexes-cmd) and put the following content into it:
 ```dos
 @echo off
 @cd /d "%~dp0\Tools"
