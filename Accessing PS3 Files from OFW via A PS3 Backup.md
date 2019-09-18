@@ -1,5 +1,6 @@
 # Accessing PS3 Files from OFW via A PS3 Backup
-Stand: 2019-07-09T22:50:00Z
+Stand: 2019-09-18T19:45:00Z<br />
+Tested FW: HFW 4.85, HFW 4.84
 
 ## Foreword
 **!!! READ THE WHOLE GUIDE BEFORE DOING ANYTHING !!!**<br />
@@ -8,7 +9,7 @@ Stand: 2019-07-09T22:50:00Z
 Intention is to show a way to access files without modifying a PS3.
 The temporary Hybrid Firmware (HFW) can be reversed completely.
 Also all trails of the dumps are discardable.
-Works as of OFW 4.82 and OFW/HFW 4.84.
+Works as of OFW 4.82 and OFW/HFW 4.85/4.84.
 
 The major part of this guide is to dump necessary data only once from a PS3 console.
 The IDPS is needed to decrypt the user folders and files inside a normal PS3 backup.
@@ -29,7 +30,7 @@ On the others getting all information and files could be done by just using thei
   * [PC: Install Necessary Tools](#pc-install-necessary-tools)
 * [Dump Necessary Data from the PS3 (only once per console)](#dump-necessary-data-from-the-ps3-only-once-per-console)
   * [PS3: Check Date and Time, Prepare Dummy User plus Internet Browser for Dumps](#ps3-check-date-and-time-prepare-dummy-user-plus-internet-browser-for-dumps)
-  * [PS3: Install Hybrid Firmware (HFW) 4.84 for Dumps](#ps3-install-hybrid-firmware-hfw-484-for-dumps)
+  * [PS3: Install Hybrid Firmware (HFW) 4.85 for Dumps](#ps3-install-hybrid-firmware-hfw-485-for-dumps)
   * [PS3: Dump IDPS, OpenPSID and Lowest Possible Firmware Version](#ps3-dump-idps-openpsid-and-lowest-possible-firmware-version)
   * [PS3: Dump Flash Memory](#ps3-dump-flash-memory)
   * [PS3: Dump xRegistry](#ps3-dump-xregistry)
@@ -89,7 +90,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * PS3 firmware files are valid for all regions.
 * The needed **full** PS3 firmware files are called `PS3UPDAT.PUP`. The smaller patch files called `PS3PATCH.PUP` cannot be used for this guide.
 * If the PS3 console is on Original Firmware (OFW) 4.8**2**, then there is no need to mess with the firmware. Just skip all OFW/HFW firmware related steps.
-* Otherwise the Hybrid Firmware (HFW) 4.84 re-implements a web browser exploit from the Original Firmware (OFW) 4.82.
+* Otherwise the Hybrid Firmware (HFW) 4.85 re-implements a web browser exploit from the Original Firmware (OFW) 4.82.
 * Connect USB HDD/stick to the PC.
 * Create a folder with the actual PS3 serial number on it, to put all console related files into: `\03-nnnnnnnn-nnnnnnn-CExxxxxxx`
   * Create an empty text file inside that folder with the name: `information.txt`
@@ -97,16 +98,16 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * Determine the PS3's flash memory type by checking its console type (Fat/Slim/SuperSlim) and model number against the [Reddit wiki][2] and [PS Dev Wiki][3].
   * Write the flash memory type into the information text file too.
   * Additionally create sub-folders for each user on the PS3, e.g. by using their PSN name or account or just the PS3 user name. These folders will be used to backup the activation file (`act.dat`) of each user.
-* Add Original Firmware (OFW) 4.84 to the USB HDD/stick.
-  * Create the following folder on it: `\PS3\UPDATE\UPDATE_OFW484`
-  * Download the full OFW 4.84 from the [PS3 Firmware archives][4].
+* Add Original Firmware (OFW) 4.85 to the USB HDD/stick.
+  * Create the following folder on it: `\PS3\UPDATE\UPDATE_OFW485`
+  * Download the full OFW 4.85 from the [PS3 Firmware archives][4].
   * Check its MD5 sum.
-  * Put the PS3UPDAT.PUP into \PS3\UPDATE\UPDATE_OFW484.
-* Add Hybrid Firmware (HFW) 4.84 to the USB HDD/stick.
-  * Create the following folder on it: `\PS3\UPDATE\UPDATE_HFW484`
-  * Download [HFW 4.84][5].
+  * Put the PS3UPDAT.PUP into \PS3\UPDATE\UPDATE_OFW485.
+* Add Hybrid Firmware (HFW) 4.85 to the USB HDD/stick.
+  * Create the following folder on it: `\PS3\UPDATE\UPDATE_HFW485`
+  * Download [HFW 4.85][5].
   * Check its MD5 sum.
-  * Extract its PS3UPDAT.PUP into \PS3\UPDATE\UPDATE_HFW484.
+  * Extract its PS3UPDAT.PUP into \PS3\UPDATE\UPDATE_HFW485.
 * Check that there is enough free space remaining for the tasks to do (backup plus a buffer of at least 1 GiB).
 
 ### PC: Install Necessary Tools
@@ -138,15 +139,16 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
     * Go back to its main page via `L2` or through its bookmark via `Select`.
   * Exit Browser via `Triangle > Exit > Yes`.
 
-### PS3: Install Hybrid Firmware (HFW) 4.84 for Dumps
+### PS3: Install Hybrid Firmware (HFW) 4.85 for Dumps
 * Skip these steps if the PS3 console is on OFW 4.82.
 * Connect USB HDD/stick to the PC.
-* On the PC copy HFW 4.84 to the USB HDD/stick folder \PS3\UPDATE.
+* On the PC copy HFW 4.85 to the USB HDD/stick folder \PS3\UPDATE.
 * Connect USB HDD/stick to the PS3.
 * Log into the PS3 with the dummy user.
-* On the PS3 "update" to HFW 4.84 via `System > System Update > Update via Storage Media`.
+* On the PS3 "update" to HFW 4.85 via `System > System Update > Update via Storage Media`.
 
 ### PS3: Dump IDPS, OpenPSID and Lowest Possible Firmware Version
+* Tested successfully: dumper 3.02 with 4.85 and 4.84, dumper 3.01 with 4.84
 * Connect USB HDD/stick to the PS3.
 * Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
 * Log into the PS3 with the dummy user.
@@ -164,6 +166,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * Write the lowest possible firmware version into the information text file for the related console, e.g. \03-nnnnnnnn-nnnnnnn-CExxxxxxx\information.txt.
 
 ### PS3: Dump Flash Memory
+* Tested successfully: dumper 2.02 with 4.85 and 4.84, dumper 2.01 with 4.84
 * Connect USB HDD/stick to the PS3.
 * Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
 * Log into the PS3 with the dummy user.
@@ -178,6 +181,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * On the PC move the file `dump.hex` into the folder with the PS3 serial number.
 
 ### PS3: Dump xRegistry
+* Tested successfully: dumper 3.02 with 4.85 and 4.84, dumper 3.01 with 4.84
 * Connect USB HDD/stick to the PS3.
 * Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
 * Log into the PS3 with the dummy user.
@@ -204,12 +208,12 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * Exit Browser via `Triangle > Exit > Yes`.
 * Delete dictionaries via `Settings > System Settings > Delete Predictive Text Dictionary`.
 * Optionally delete dummy user.
-* The PS3 console can now be reverted to OFW 4.84 if wanted.
+* The PS3 console can now be reverted to OFW 4.85 if wanted.
   * Skip these steps if the PS3 console is on OFW 4.82.
   * Connect USB HDD/stick to the PC.
-  * On the PC copy OFW 4.84 to the USB HDD/stick folder \PS3\UPDATE.
+  * On the PC copy OFW 4.85 to the USB HDD/stick folder \PS3\UPDATE.
   * Connect USB HDD/stick to the PS3.
-  * On the PS3 "update" to OFW 4.84 via `System > System Update > Update via Storage Media`.
+  * On the PS3 "update" to OFW 4.85 via `System > System Update > Update via Storage Media`.
     * Always flash twice, so that both flash banks are getting flashed anew.
 
 ## Extract Files from A PS3 Backup
@@ -288,7 +292,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 [2]: https://www.reddit.com/r/ps3homebrew/wiki/how_to_hack "Reddit Wiki - Console Hack Compatibility"
 [3]: https://www.psdevwiki.com/ps3/SKU_Models "PS Dev Wiki - Console Model/SKU List"
 [4]: https://darthsternie.net/ps3-firmwares/ "Darthsternie's Firmware Archive - PS3"
-[5]: https://www.psx-place.com/threads/23094/ "PSX-Place Forum - Hybrid Firmware 4.84"
+[5]: https://www.psx-place.com/threads/23094/ "PSX-Place Forum - Hybrid Firmware 4.85/4.84"
 [6]: http://ps3xploit.com/ "PS3Xploit Home Page"
 [7]: https://www.psx-place.com/threads/21448/ "PSX-Place Forum - PS3Xport"
 [8]: https://www.psx-place.com/threads/24890/ "PSX-Place Forum - Bug report for IDPS dumper"
