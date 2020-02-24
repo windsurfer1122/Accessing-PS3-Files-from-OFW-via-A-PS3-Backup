@@ -244,12 +244,12 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * Drag the PS3 backup folder on the batch file [`ExtractIndexes.cmd`](#pc-install-necessary-tools) inside PS3Xport's main folder.
   This will create a text file inside PS3Xport's main folder with the name of the PS3 backup folder, that contains the complete index of the PS3 backup.
 * Determine all wanted file entries in the archive index.
-  * For example to separately backup the activation files (`act.dat`) and license files (`*.rif`, `*.edat`) use the following patterns: `/dev_hdd0/home/*/exdata/act.dat`
+  * For example to separately backup the activation files (`act.dat`) and license files (`*.rif`, `*.edat`) use the following patterns: `/dev_hdd0/home/<nnnnnnnn>/exdata/act.dat`
 * Run PS3Xport Tool.
 * Enable IDPS mode to also work on the encrypted part of the PS3 backup.
 * Extract all determined folders and/or files.
-  * For the example above that would be the folders: `/dev_hdd0/home/*/exdata`
-* To better recognize the PS3 user additionally extract the following file from each related user folder: `/dev_hdd0/home/*/localusername`
+  * For the example above that would be the folders: `/dev_hdd0/home/<nnnnnnnn>/exdata`
+* To better recognize the PS3 user additionally extract the following file from each related user folder: `/dev_hdd0/home/<nnnnnnnn>/localusername`
 * Backup all activation files and licenses (`exdata` folders) plus `localusername` files to their related user sub-folders on the USB HDD/stick.
 * It's recommended to backup the folder with the PS3 serial number of the USB HDD/stick in an additional place.
 
