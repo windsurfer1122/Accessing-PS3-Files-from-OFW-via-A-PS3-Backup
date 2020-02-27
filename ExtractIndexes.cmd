@@ -1,6 +1,12 @@
 @echo off
-@cd /d "%~dp0\Tools"
+@pushd "%~dp0\Tools"
 
-PS3Xport.exe SetDeviceID ..\idps.bin ReadIndex "%~1\archive.dat" ReadIndex "%~1\archive2.dat" >"..\%~n1_index.txt"
+set IDPS=..\idps.bin
+PS3Xport.exe ^
+  SetDeviceID "%IDPS%" ^
+  ReadIndex "%~1\archive.dat" ^
+  ReadIndex "%~1\archive2.dat" ^
+  >"..\%~n1_index.txt"
 
+@popd
 @pause

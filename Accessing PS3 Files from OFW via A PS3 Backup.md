@@ -1,24 +1,24 @@
 # Accessing PS3 Files from OFW via A PS3 Backup
-Stand: 2019-09-18T19:45:00Z<br />
-Tested FW: HFW 4.84
-Failed FW: HFW 4.85, it seems the backup format has changed so PS3xport cannot correctly extract the data. All other steps work correctly.
+Stand: 2020-02-27T19:37:00Z<br />
+Succesfully tested FW: OFW 4.85, HFW 4.85, OFW 4.84, HFW 4.84 and OFW 4.82.<br />
+Succesfully tested consoles: Fat PS3, Slim PS3 (30xx)
 
 ## Foreword
 **!!! READ THE WHOLE GUIDE BEFORE DOING ANYTHING !!!**<br />
-**!!! USE AT YOUR OWN RISK !!!**
+**!!! USE AT YOUR OWN RISK !!!**<br />
+**!!! RESULTS MAY VARY !!!**
 
 Intention is to show a way to access files without modifying a PS3.
 The temporary Hybrid Firmware (HFW) can be reversed completely.
 Also all trails of the dumps are discardable.
-Works as of OFW 4.82 and OFW/HFW 4.84.
 
 The major part of this guide is to dump necessary data only once from a PS3 console.
 The IDPS is needed to decrypt the user folders and files inside a normal PS3 backup.
 The wanted files from that PS3 console are then extracted from that PS3 backup.
 
-Other methods like HAN, PS3HEN and Custom Firmware (CFW) do change and/or do add files to the file system.
+Other methods like PS3HEN, Custom Firmware (CFW) and HAN do change and/or do add files to the file system.
 By the way HAN's file copier is not convenient enough for these tasks.
-On the others getting all information and files could be done by just using their toolboxes, SEN Enabler, PSNpatch or webMAN-MOD plus a file/backup manager.
+With these other methods getting all information and files could be done by just using their toolboxes, SEN Enabler, PSNpatch or webMAN-MOD plus a file/backup manager.
 
 **!!! USE AT YOUR OWN RISK !!!**
 
@@ -30,19 +30,30 @@ On the others getting all information and files could be done by just using thei
   * [PC: Place Necessary Files on USB Device](#pc-place-necessary-files-on-usb-device)
   * [PC: Install Necessary Tools](#pc-install-necessary-tools)
 * [Dump Necessary Data from the PS3 (only once per console)](#dump-necessary-data-from-the-ps3-only-once-per-console)
-  * [PS3: Check Date and Time, Prepare Dummy User plus Internet Browser for Dumps](#ps3-check-date-and-time-prepare-dummy-user-plus-internet-browser-for-dumps)
-  * [PS3: Install Hybrid Firmware (HFW) 4.84 for Dumps](#ps3-install-hybrid-firmware-hfw-484-for-dumps)
+  * [PS3: Check USB Ports](#ps3-check-usb-ports)
+  * [PS3: Check Date and Time](#ps3-check-date-and-time)
+  * [PS3: Install Hybrid Firmware (HFW) for Dumps](#ps3-install-hybrid-firmware-hfw-for-dumps)
+  * [PS3: Prepare Dummy User plus Internet Browser for Dumps](#ps3-prepare-dummy-user-plus-internet-browser-for-dumps)
+  * [PS3: Prepare Real User With Activation plus Internet Browser for Dumps](#ps3-prepare-real-user-with-activation-plus-internet-browser-for-dumps)
   * [PS3: Dump IDPS, OpenPSID and Lowest Possible Firmware Version](#ps3-dump-idps-openpsid-and-lowest-possible-firmware-version)
   * [PS3: Dump Flash Memory](#ps3-dump-flash-memory)
   * [PS3: Dump xRegistry](#ps3-dump-xregistry)
-  * [PS3: Clean-up Dump Trails](#ps3-clean-up-dump-trails)
+  * [PS3: Clean-up Dump Trails for Dummy User](#ps3-clean-up-dump-trails-for-dummy-user)
+  * [PS3: Dump `act.dat`](#ps3-dump-actdat)
+  * [PS3: Clean-up Dump Trails for Real User](#ps3-clean-up-dump-trails-for-real-user)
+  * [PS3: Optionally Revert Firmware](#ps3-optionally-revert-firmware)
+  * [PS3: USB Ports](#ps3-usb-ports)
 * [Extract Files from A PS3 Backup](#extract-files-from-a-ps3-backup)
   * [PS3: Activate Titles from PS Store](#ps3-activate-titles-from-ps-store)
   * [PS3: Create A PS3 Backup](#ps3-create-a-ps3-backup)
   * [PC: Extract Wanted Files from A PS3 Backup](#pc-extract-wanted-files-from-a-ps3-backup)
+  * [PC: Verify Validity of A PS3 Backup](#pc-verify-validity-of-a-ps3-backup)
+* [Troubleshooting](#troubleshooting)
+  * [Corrupted Backups](#corrupted-backups)
+  * [Activation Errors](#activation-errors)
 * [Alternative Ways](#alternative-ways)
   * [PC: Get IDPS and Lowest Possible Firmware Version from A PS3 Flash Memory Dump](#pc-get-idps-and-lowest-possible-firmware-version-from-a-ps3-flash-memory-dump)
-  * [PC: Get Console's OpenPSID from A PS3 Backup  (needs `idps.bin`)](#pc-get-consoles-openpsid-from-a-ps3-backup-needs-idpsbin)
+  * [PC: Get Console's OpenPSID from A PS3 Backup (needs `idps.bin`)](#pc-get-consoles-openpsid-from-a-ps3-backup-needs-idpsbin)
   * [PS3: Determine Lowest Possible Firmware Version via Fake Firmware Update](#ps3-determine-lowest-possible-firmware-version-via-fake-firmware-update)
 
 ## Short Guide for Experts
@@ -63,7 +74,9 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * HDDs must be partitioned with MBR (PS3 doesn't support GPT).
   * Recommended is a cluster/allocation size of 64 KiB. Higher values like 128 KiB will increase the time of PS3 backup creation tremendously.
   * Windows: Use Ridgecrop's [Fat32Format][1] - `fat32format.exe -c128 X:`
+    * Note that `-c128` is correct due to a sector size of 0.5 KiB.
   * Linux: `mkfs.vfat -F 32 -s 128 /dev/...`
+    * Note that `-s 128` is correct due to a sector size of 0.5 KiB.
 * Create the following folder structure on it:
   * `\DCIM`
   * `\MUSIC`
@@ -91,24 +104,25 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * PS3 firmware files are valid for all regions.
 * The needed **full** PS3 firmware files are called `PS3UPDAT.PUP`. The smaller patch files called `PS3PATCH.PUP` cannot be used for this guide.
 * If the PS3 console is on Original Firmware (OFW) 4.8**2**, then there is no need to mess with the firmware. Just skip all OFW/HFW firmware related steps.
-* Otherwise the Hybrid Firmware (HFW) 4.84 re-implements a web browser exploit from the Original Firmware (OFW) 4.82.
+* Otherwise the Hybrid Firmware (HFW) 4.85/4.84 re-implements a web browser exploit from the Original Firmware (OFW) 4.82.
 * Connect USB HDD/stick to the PC.
 * Create a folder with the actual PS3 serial number on it, to put all console related files into: `\03-nnnnnnnn-nnnnnnn-CExxxxxxx`
   * Create an empty text file inside that folder with the name: `information.txt`
   * Write all the information from the case into that information text file, e.g. serial number, model number, date code, etc.
   * Determine the PS3's flash memory type by checking its console type (Fat/Slim/SuperSlim) and model number against the [Reddit wiki][2] and [PS Dev Wiki][3].
   * Write the flash memory type into the information text file too.
-  * Additionally create sub-folders for each user on the PS3, e.g. by using their PSN name or account or just the PS3 user name. These folders will be used to backup the activation file (`act.dat`) of each user.
-* Add Original Firmware (OFW) 4.84 to the USB HDD/stick.
-  * Create the following folder on it: `\PS3\UPDATE\UPDATE_OFW484`
-  * Download the full OFW 4.84 from the [PS3 Firmware archives][4].
+  * Additionally create sub-folders for each user on the PS3, e.g. by using their PSN name or account or just the PS3 user name.
+    These folders will be used to backup the activation file (`act.dat`) of each user.
+* Add Original Firmware (OFW) 4.85/4.84 to the USB HDD/stick.
+  * Create the following folder on it: `\PS3\UPDATE\UPDATE_OFW485` and/or `\PS3\UPDATE\UPDATE_OFW484`
+  * Download the full OFW 4.85/4.84 from the [PS3 Firmware archives][4].
   * Check its MD5 sum.
-  * Put the PS3UPDAT.PUP into \PS3\UPDATE\UPDATE_OFW484.
-* Add Hybrid Firmware (HFW) 4.84 to the USB HDD/stick.
-  * Create the following folder on it: `\PS3\UPDATE\UPDATE_HFW484`
-  * Download [HFW 4.84][5].
+  * Put the PS3UPDAT.PUP into the corresponding folder `\PS3\UPDATE\UPDATE_OFW48x`.
+* Add Hybrid Firmware (HFW) 4.85/4.84 to the USB HDD/stick.
+  * Create the following folder on it: `\PS3\UPDATE\UPDATE_HFW485` and/or `\PS3\UPDATE\UPDATE_HFW484`
+  * Download [HFW 4.85/4.84][5].
   * Check its MD5 sum.
-  * Extract its PS3UPDAT.PUP into \PS3\UPDATE\UPDATE_HFW484.
+  * Extract its PS3UPDAT.PUP into the corresponding folder `\PS3\UPDATE\UPDATE_HFW48x`.
 * Check that there is enough free space remaining for the tasks to do (backup plus a buffer of at least 1 GiB).
 
 ### PC: Install Necessary Tools
@@ -119,11 +133,28 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 ## Dump Necessary Data from the PS3 (only once per console)
 **!!! USE AT YOUR OWN RISK !!!**
 
-### PS3: Check Date and Time, Prepare Dummy User plus Internet Browser for Dumps
+### PS3: Check USB Ports
+* Remove any USB extensions (hubs, etc.) from the PS3 as the original USB ports must be used for dumps.
+  Typically the right (most inner) USB port of the PS3 is used (`/dev_usb000`).
+
+### PS3: Check Date and Time
 * Check that the PS3's date and time are accurate via `Settings > Date and Time Settings`.
-* Create a dummy user without any PSN connection. Use that dummy user for anything related to "hacking".
+
+### PS3: Install Hybrid Firmware (HFW) for Dumps
+* Skip these steps if the PS3 console is on OFW 4.82.
+* Note: A downgrade is not possible with these steps.
+* Connect USB HDD/stick to the PC.
+* On the PC copy HFW 4.85/4.84 to the USB HDD/stick folder \PS3\UPDATE.
+* Connect USB HDD/stick to the PS3.
 * Log into the PS3 with the dummy user.
-* Prepare the browser for IDPS dump and flash memory dump (either NAND/eMMc or NOR).
+* On the PS3 "update" to HFW via `System > System Update > Update via Storage Media`.
+  * Always flash twice, so that both flash banks are getting flashed anew.
+
+### PS3: Prepare Dummy User plus Internet Browser for Dumps
+* Create a dummy user without any PSN connection. Use that dummy user for anything related to "hacking".
+  * There's one exception: get the `act.dat` of a real user with activation to verify the backups later.
+* Log into the PS3 with the dummy user.
+* Prepare the browser for IDPS, flash memory (either NAND/eMMc or NOR) and xRegistry dump.
   * Start `Network > Internet Browser`.
   * Define a blank "Home"/Start page via `Triangle > Tools > Home Page > Use Blank Page`.
     Necessary to make sure that later no JavaScript is executed before a exploit.
@@ -140,16 +171,21 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
     * Go back to its main page via `L2` or through its bookmark via `Select`.
   * Exit Browser via `Triangle > Exit > Yes`.
 
-### PS3: Install Hybrid Firmware (HFW) 4.84 for Dumps
-* Skip these steps if the PS3 console is on OFW 4.82.
-* Connect USB HDD/stick to the PC.
-* On the PC copy HFW 4.84 to the USB HDD/stick folder \PS3\UPDATE.
-* Connect USB HDD/stick to the PS3.
-* Log into the PS3 with the dummy user.
-* On the PS3 "update" to HFW 4.84 via `System > System Update > Update via Storage Media`.
+### PS3: Prepare Real User With Activation plus Internet Browser for Dumps
+* Log into the PS3 with the real user.
+* Prepare the browser for `act.dat` dump.
+  * Start `Network > Internet Browser`.
+  * Define a blank "Home"/Start page via `Triangle > Tools > Home Page > Use Blank Page`.
+    Necessary to make sure that later no JavaScript is executed before a exploit.
+  * Reload "Home"/Start page via `Triangle > Home`.
+  * Go to [http://ps3xploit.com/][6] via `Start`, then add a bookmark for it via `Select`.
+  * Prepare `act.dat` dump.
+    * From the home page menu select `v3 HAN Tools > ACT/IDPS Dumper`, then add a bookmark for it via `Select`.
+    * Go back to its main page via `L2` or through its bookmark via `Select`.
+  * Exit Browser via `Triangle > Exit > Yes`.
 
 ### PS3: Dump IDPS, OpenPSID and Lowest Possible Firmware Version
-* Tested successfully: dumper 3.02 with 4.85 and 4.84, dumper 3.01 with 4.84
+* Tested successfully: dumper 3.02 with HFW 4.85 and 4.84, dumper 3.01 with HFW 4.84
 * Connect USB HDD/stick to the PS3.
 * Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
 * Log into the PS3 with the dummy user.
@@ -162,12 +198,14 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * Exit Browser via `Triangle > Exit > Yes`.
 * Connect USB HDD/stick to the PC.
 * On the PC move the files `idps.bin`, `psid.bin` and `minver.bin` into the folder with the PS3 serial number.
+  * Note: The IDPS will never change for a console, even when restoring ("formatting") the PS3.
+    Therefore it can also be used for any older backup of that console.
 * Display `minver.bin` [as hex](#pc-install-necessary-tools). The bytes state the lowest possible firmware version for that PS3 console in [BCD][15].
   * Example: 00 02 00 57 means version 2.57
   * Write the lowest possible firmware version into the information text file for the related console, e.g. \03-nnnnnnnn-nnnnnnn-CExxxxxxx\information.txt.
 
 ### PS3: Dump Flash Memory
-* Tested successfully: dumper 2.02 with 4.85 and 4.84, dumper 2.01 with 4.84
+* Tested successfully: dumper 2.02 with HFW 4.85 and 4.84, dumper 2.01 with HFW 4.84
 * Connect USB HDD/stick to the PS3.
 * Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
 * Log into the PS3 with the dummy user.
@@ -182,7 +220,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * On the PC move the file `dump.hex` into the folder with the PS3 serial number.
 
 ### PS3: Dump xRegistry
-* Tested successfully: dumper 3.02 with 4.85 and 4.84, dumper 3.01 with 4.84
+* Tested successfully: dumper 3.02 with HFW 4.85 and 4.84, dumper 3.01 with HFW 4.84
 * Connect USB HDD/stick to the PS3.
 * Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
 * Log into the PS3 with the dummy user.
@@ -196,26 +234,62 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * Connect USB HDD/stick to the PC.
 * On the PC move the file `xRegistry.sys` into the folder with the PS3 serial number.
 
-### PS3: Clean-up Dump Trails
-* Any USB extensions (hubs, etc.) can be reconnected to the PS3 again.
+### PS3: Clean-up Dump Trails for Dummy User
 * Log into the PS3 with the dummy user.
 * Delete trails in Internet Browser.
   * Start `Network > Internet Browser`.
   * Delete bookmarks of PS3Xploit via `Select`.
-    * Either for each bookmark via `Triangle > Delete > Yes`, or `Triangle > Delete All` if only PS3Xploit bookmarks present.
+    * Either for each bookmark via `Triangle > Delete > Yes`, or `Triangle > Delete All` if only PS3Xploit bookmarks are present.
     * Press `Circle` to go back.
   * Delete cookies, search history and cache via `Triangle > Tools > Delete ... > Yes`.
   * Delete visit history via `Triangle > History > Triangle > Delete All > Yes`.
   * Exit Browser via `Triangle > Exit > Yes`.
 * Delete dictionaries via `Settings > System Settings > Delete Predictive Text Dictionary`.
 * Optionally delete dummy user.
-* The PS3 console can now be reverted to OFW 4.84 if wanted.
+
+### PS3: Dump `act.dat`
+* Note: Normally use the dummy user for anything related to "hacking" except for this single dump.
+* The `act.dat` will be needed later to verify the backups.
+* Tested successfully: tools 3.02 with HFW 4.85
+* Connect USB HDD/stick to the PS3.
+* Make sure USB HDD/stick is connected to the right (most inner) USB port of the PS3 (`/dev_usb000`).
+* Log into the PS3 with the real user.
+* Dump `act.dat` with Internet Browser.
+  * Start `Network > Internet Browser`.
+  * Go to `v3 HAN Tools > ACT/IDPS Dumper` through its bookmark via `Select`.
+  * Press button `Initialize ACT/IDPS Dumper` and wait for the exploit to be applied.
+    If it fails, then close browser and start again.
+  * Press button `Dump ACT.DAT & IDPS`.
+  * Exit Browser via `Triangle > Exit > Yes`.
+* Connect USB HDD/stick to the PC.
+* On the PC move the file `act.dat` into the related user sub-folder on the USB HDD/stick.<br />
+  * Note: The `act.dat` will **change** with each new activation of that console for that user.
+    So remember to re-dump whenever a new activation was done, otherwise validation will report false-false result.
+
+### PS3: Clean-up Dump Trails for Real User
+* Log into the PS3 with the real user.
+* Delete trails in Internet Browser.
+  * Start `Network > Internet Browser`.
+  * Delete bookmarks of PS3Xploit via `Select`.
+    * Either for each bookmark via `Triangle > Delete > Yes`, or `Triangle > Delete All` if only PS3Xploit bookmarks are present.
+    * Press `Circle` to go back.
+  * Delete cookies, search history and cache via `Triangle > Tools > Delete ... > Yes`.
+  * Delete visit history via `Triangle > History > Triangle > Delete All > Yes`.
+  * Exit Browser via `Triangle > Exit > Yes`.
+* Delete dictionaries via `Settings > System Settings > Delete Predictive Text Dictionary`.
+
+### PS3: Optionally Revert Firmware
+* The PS3 console can now be reverted to OFW 4.85/4.84 if wanted.
   * Skip these steps if the PS3 console is on OFW 4.82.
+  * Note: A downgrade is not possible with these steps.
   * Connect USB HDD/stick to the PC.
-  * On the PC copy OFW 4.84 to the USB HDD/stick folder \PS3\UPDATE.
+  * On the PC copy OFW 4.85/4.84 to the USB HDD/stick folder \PS3\UPDATE.
   * Connect USB HDD/stick to the PS3.
-  * On the PS3 "update" to OFW 4.84 via `System > System Update > Update via Storage Media`.
+  * On the PS3 "update" to OFW via `System > System Update > Update via Storage Media`.
     * Always flash twice, so that both flash banks are getting flashed anew.
+
+### PS3: USB Ports
+* Any USB extensions (hubs, etc.) can be reconnected to the PS3 again.
 
 ## Extract Files from A PS3 Backup
 
@@ -245,14 +319,34 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * Drag the PS3 backup folder on the batch file [`ExtractIndexes.cmd`](#pc-install-necessary-tools) inside PS3Xport's main folder.
   This will create a text file inside PS3Xport's main folder with the name of the PS3 backup folder, that contains the complete index of the PS3 backup.
 * Determine all wanted file entries in the archive index.
-  * For example to separately backup the activation files (`act.dat`) and license files (`*.rif`, `*.edat`) use the following patterns: `/dev_hdd0/home/<nnnnnnnn>/exdata/act.dat`
+  * For example to separately backup the activation files (`act.dat`) and license files (`*.rif`, `*.edat`) use the following patterns: `/dev_hdd0/home/nnnnnnnn/exdata/act.dat`
 * Run PS3Xport Tool.
 * Enable IDPS mode to also work on the encrypted part of the PS3 backup.
 * Extract all determined folders and/or files.
-  * For the example above that would be the folders: `/dev_hdd0/home/<nnnnnnnn>/exdata`
-* To better recognize the PS3 user additionally extract the following file from each related user folder: `/dev_hdd0/home/<nnnnnnnn>/localusername`
+  * For the example above that would be the folders: `/dev_hdd0/home/nnnnnnnn/exdata`
+* To better recognize the PS3 user additionally extract the following file from each related user folder: `/dev_hdd0/home/nnnnnnnn/localusername`
+* It's recommended to [verify the extraction](#pc-verify-validity-of-a-ps3-backup).
 * Backup all activation files and licenses (`exdata` folders) plus `localusername` files to their related user sub-folders on the USB HDD/stick.
 * It's recommended to backup the folder with the PS3 serial number of the USB HDD/stick in an additional place.
+* Optionally when the user numbers are known, then the batch file [`ExtractBackup.cmd`](#file-extractbackup-cmd) can be used to extract all their files in single run.
+  * Copy the batch file [`ExtractBackup.cmd`](#file-extractbackup-cmd) and [`users.txt`](#file-users-txt) into PS3Xport's main folder.
+  * Maintain the user numbers in [`users.txt`](#file-users-txt).
+  * Drag the PS3 backup folder on the batch file [`ExtractBackup.cmd`](#file-extractbackup-cmd) inside PS3Xport's main folder.
+
+### PC: Verify Validity of A PS3 Backup
+* Compare the just extracted `act.dat` from the real user with the [earlier dumped `act.dat`](#ps3-dump-actdat). Use a proper [PC tool](#pc-install-necessary-tools) for this.
+* If they differ it is very likely that the [backup is corrupted](#corrupted-backups).
+  * Note: The `act.dat` will **change** with each new activation of that console for that user.
+    So remember to [re-dump](#ps3-dump-actdat) whenever a new activation was done, otherwise validation will report false-false result.
+
+## Troubleshooting
+
+### Corrupted Backups
+On a Slim PS3 (30xx) after update to HFW 4.85 the backups became corrupted. The reason is unknown.
+Solution was to restore ("format") the PS3 completely as everything else like repair file system, database or restore default settings did not fix it.
+
+### Activation Errors
+Errors may occur when activating a lot of titles in a short time, see [Activate Titles from PS Store](#ps3-activate-titles-from-ps-store).
 
 ## Alternative Ways
 
