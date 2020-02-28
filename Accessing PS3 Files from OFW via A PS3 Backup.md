@@ -49,6 +49,7 @@ With these other methods getting all information and files could be done by just
   * [PC: Extract Wanted Files from A PS3 Backup](#pc-extract-wanted-files-from-a-ps3-backup)
   * [PC: Verify Validity of A PS3 Backup](#pc-verify-validity-of-a-ps3-backup)
 * [Troubleshooting](#troubleshooting)
+  * [Safe Mode](#safe-mode)
   * [Corrupted Backups](#corrupted-backups)
   * [Activation Errors](#activation-errors)
 * [Alternative Ways](#alternative-ways)
@@ -58,7 +59,7 @@ With these other methods getting all information and files could be done by just
 
 ## Short Guide for Experts
 * Get IDPS of PS3 console via [PS3Xploit][6]'s dumper.
-* Create a PS3 backup.
+* Create a PS3 system backup ([1][19], [2][20]).
 * Use [PS3Xport][7] with the IDPS binary file to extract wanted files from PS3 backup.
 
 ## Prerequisites
@@ -85,11 +86,11 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * `\PS3`
   * `\PS3\BACKUP`
   * `\PS3\EXPORT`
-  * `\PS3\EXPORT\BACKUP`
+  * `\PS3\EXPORT\BACKUP` (for PS3 system backups ([1][19], [2][20]))
   * `\PS3\GAME`
   * `\PS3\SAVEDATA`
   * `\PS3\THEME`
-  * `\PS3\UPDATE` (for Firmware updates)
+  * `\PS3\UPDATE` (for firmware updates ([1][17], [2][18]))
   * `\VIDEO`
 * Check that there is enough free space remaining for the tasks to do.
 
@@ -147,7 +148,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 * On the PC copy HFW 4.85/4.84 to the USB HDD/stick folder \PS3\UPDATE.
 * Connect USB HDD/stick to the PS3.
 * Log into the PS3 with the dummy user.
-* On the PS3 "update" to HFW via `System > System Update > Update via Storage Media`.
+* On the PS3 "update" ([1][17], [2][18]) to HFW via `System > System Update > Update via Storage Media`.
   * Always flash twice, so that both flash banks are getting flashed anew.
 
 ### PS3: Prepare Dummy User plus Internet Browser for Dumps
@@ -285,7 +286,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
   * Connect USB HDD/stick to the PC.
   * On the PC copy OFW 4.85/4.84 to the USB HDD/stick folder \PS3\UPDATE.
   * Connect USB HDD/stick to the PS3.
-  * On the PS3 "update" to OFW via `System > System Update > Update via Storage Media`.
+  * On the PS3 "update" ([1][17], [2][18]) to OFW via `System > System Update > Update via Storage Media`.
     * Always flash twice, so that both flash banks are getting flashed anew.
 
 ### PS3: USB Ports
@@ -311,7 +312,7 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 ### PS3: Create A PS3 Backup
 * Connect USB HDD/stick to the PS3.
 * Log into the PS3 with any user.
-* Create a PS3 backup on the USB HDD/stick via `Settings > System Settings > Backup Utility > Back Up`.
+* Create a PS3 system backup ([1][19], [2][20]) on the USB HDD/stick via `Settings > System Settings > Backup Utility > Back Up`.
 
 ### PC: Extract Wanted Files from A PS3 Backup
 * Connect the device which contains the PS3 backup to the PC, e.g. USB HDD/stick.
@@ -341,9 +342,12 @@ This guide uses Windows as the operating system (OS) to extract data from the PS
 
 ## Troubleshooting
 
+### Safe Mode
+The [PS3 has a Safe Mode][21] which allows to restore the default settings ([1][22], [2][23]), restore the file system, rebuild the database, restore the PS3 system ([1][24]) or do an system update ([1][17], [2][18]), when the PS3 does not start normally anymore.
+
 ### Corrupted Backups
 On a Slim PS3 (30xx) after update to HFW 4.85 the backups became corrupted. The reason is unknown.
-Solution was to restore ("format") the PS3 completely as everything else like repair file system, database or restore default settings did not fix it.
+Solution was to [restore ("format") the PS3][24] completely as everything else like repair file system, database or restore default settings did not fix it.
 
 ### Activation Errors
 Errors may occur when activating a lot of titles in a short time, see [Activate Titles from PS Store](#ps3-activate-titles-from-ps-store).
@@ -399,3 +403,11 @@ Errors may occur when activating a lot of titles in a short time, see [Activate 
 [14]: https://www.fileformat.info/tool/hexdump.htm "FileFormat.info - Online HexDump Utility"
 [15]: https://en.wikipedia.org/wiki/Binary-coded_decimal "Wikipedia - Binary-coded Decimals"
 [16]: https://www.psx-place.com/resources/858/ "PSX-Place Forum - PS3 NOR/NAND Statistic (aka dumpstatistic)"
+[17]: https://www.playstation.com/en-us/support/system-updates/ps3/ "PS3 Support - System Software Update"
+[18]: https://manuals.playstation.net/document/en/ps3/current/settings/update.html "PS3 Manual - System Update"
+[19]: https://support.playstation.com/s/article/PS3-Backup-Utility?language=en_US "PS3 Support - Backup Utility"
+[20]: https://manuals.playstation.net/document/en/ps3/current/settings/backuputility.html "PS3 Manual - Backup Utility"
+[21]: https://support.playstation.com/s/article/PS3-Safe-Mode1?language=en_US "PS3 Support - Safe Mode"
+[22]: https://support.playstation.com/s/article/Restore-PS3-Default-Settings?language=en_US "PS3 Support - Restore PS3 Default Settings"
+[23]: https://manuals.playstation.net/document/en/ps3/current/settings/restore.html "PS3 Manual - Restore Default Settings"
+[24]: https://manuals.playstation.net/document/en/ps3/current/settings/restoreps3.html "PS3 Manual - Restore PS3 System"
