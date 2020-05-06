@@ -141,7 +141,7 @@ If a step is only necessary for one of these tools, then this is explicitly ment
 ### PC: Install Necessary Tools
 * Install [PS3Xport][7] onto the PC by extracting its archive file.
   * Copy the batch file [`ExtractIndexes.cmd`](#file-extractindexes-cmd) into PS3Xport's main folder.
-* Use either [FileFormat.info's Online Service][14] to view binary file content as hex, or have a tool available, e.g. [HxD][12], [Notepad++][13], etc.
+* Use either [FileFormat.info's Online Service][14] to view binary file content as hex or [HexEd.it Online Hex-Editor][26] to edit binary files, or have a tool available, e.g. [HxD][12], [Notepad++][13], etc.
 * **Note:** A hex editor is needed when using [bguerville][25]'s PlayStation 3 Toolset.
   * Have a hex editor available to enter the IDPS information from the toolset into a binary file, e.g. [HxD][12], [Notepad++][13], etc.
 
@@ -455,3 +455,4 @@ Errors may occur when activating a lot of titles in a short time, see [Activate 
 [23]: https://manuals.playstation.net/document/en/ps3/current/settings/restore.html "PS3 Manual - Restore Default Settings"
 [24]: https://manuals.playstation.net/document/en/ps3/current/settings/restoreps3.html "PS3 Manual - Restore PS3 System"
 [25]: https://www.ps3xploit.net/ "bguerville's PlayStation 3 Toolset"
+[26]: https://hexed.it/ "HexEd.it Online Hex-Editor"
