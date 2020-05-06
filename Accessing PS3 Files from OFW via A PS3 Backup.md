@@ -143,7 +143,7 @@ If a step is only necessary for one of these tools, then this is explicitly ment
   * Copy the batch file [`ExtractIndexes.cmd`](#file-extractindexes-cmd) into PS3Xport's main folder.
 * Use either [FileFormat.info's Online Service][14] to view binary file content as hex or [HexEd.it Online Hex-Editor][26] to edit binary files, or have a tool available, e.g. [HxD][12], [Notepad++][13], etc.
 * **Note:** A hex editor is needed when using [bguerville][25]'s PlayStation 3 Toolset.
-  * Have a hex editor available to enter the IDPS information from the toolset into a binary file, e.g. [HxD][12], [Notepad++][13], etc.
+  * Have a hex editor available to enter the IDPS information from the toolset into a binary file, e.g. [HexEd.it Online Hex-Editor][26],[HxD][12], [Notepad++][13], etc.
 
 ## Dump Necessary Data from the PS3 (only once per console)
 **!!! USE AT YOUR OWN RISK !!!**
