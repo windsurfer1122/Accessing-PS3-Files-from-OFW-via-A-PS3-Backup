@@ -1,5 +1,5 @@
 # Accessing PS3 Files from OFW via A PS3 Backup
-Stand: 2020-04-07T18:58:00Z<br />
+Stand: 2023-04-02T18:41:00Z<br />
 Succesfully tested FW: OFW 4.86, OFW 4.85, HFW 4.85, OFW 4.84, HFW 4.84 and OFW 4.82.<br />
 Succesfully tested consoles: Fat PS3, Slim PS3 (30xx)
 
@@ -122,7 +122,7 @@ If a step is only necessary for one of these tools, then this is explicitly ment
 * Create a folder with the actual PS3 serial number on it, to put all console related files into: `\03-nnnnnnnn-nnnnnnn-CExxxxxxx`
   * Create an empty text file inside that folder with the name: `information.txt`
   * Write all the information from the case into that information text file, e.g. serial number, model number, date code, etc.
-  * Determine the PS3's flash memory type by checking its console type (Fat/Slim/SuperSlim) and model number against the [Reddit wiki][2] and [PS Dev Wiki][3].
+  * Determine the flash memory type of the PS3 by checking its console type (Fat/Slim/SuperSlim) and model number against the [PS Dev Wiki][3].
   * Write the flash memory type into the information text file too.
   * Additionally create sub-folders for each user on the PS3, e.g. by using their PSN name or account or just the PS3 user name.
     These folders will be used to backup the activation file (`act.dat`) of each user.
@@ -143,7 +143,7 @@ If a step is only necessary for one of these tools, then this is explicitly ment
   * Copy the batch file [`ExtractIndexes.cmd`](#file-extractindexes-cmd) into PS3Xport's main folder.
 * Use either [FileFormat.info's Online Service][14] to view binary file content as hex or [HexEd.it Online Hex-Editor][26] to edit binary files, or have a tool available, e.g. [HxD][12], [Notepad++][13], etc.
 * **Note:** A hex editor is needed when using [bguerville][25]'s PlayStation 3 Toolset.
-  * Have a hex editor available to enter the IDPS information from the toolset into a binary file, e.g. [HexEd.it Online Hex-Editor][26],[HxD][12], [Notepad++][13], etc.
+  * Have a hex editor available to enter the IDPS information from the toolset into a binary file, e.g. [HexEd.it Online Hex-Editor][26], [HxD][12], [Notepad++][13], etc.
 
 ## Dump Necessary Data from the PS3 (only once per console)
 **!!! USE AT YOUR OWN RISK !!!**
@@ -177,9 +177,9 @@ If a step is only necessary for one of these tools, then this is explicitly ment
     Necessary to make sure that later no JavaScript is executed before a exploit.
   * Reload "Home"/Start page via `Triangle > Home`.
   * **Note:** This step is only necessary when using [bguerville][25]'s PlayStation 3 Toolset.
-    * Go to [http://www.ps3xploit.com/][25] via `Start`, the page will redirect to https://www.ps3xploit.net/bgtoolset/, then add a bookmark for it via `Select`.
+    * Go to [https://www.ps3xploit.me/][25] via `Start`, the page will redirect to https://www.ps3toolset.com/bgtoolset/, then add a bookmark for it via `Select`.
   * **Note:** These steps are only necessary when using [PS3Xploit][6]'s dumpers.
-    * Go to [http://ps3xploit.com/][6] via `Start`, then add a bookmark for it via `Select`.
+    * Go to [https://www.ps3xploit.me/][6] via `Start`, then add a bookmark for it via `Select`.
     * Prepare IDPS, OpenPSID and Minimal Possible Firmware dump.
       * From the home page menu select `v3 HAN Tools > Extra Tools > IDPS/PSID/Minver Dump > Run This Tool Now`, then add a bookmark for it via `Select`.
       * Go back to its main page via `L2` or through its bookmark via `Select`.
@@ -199,7 +199,7 @@ If a step is only necessary for one of these tools, then this is explicitly ment
   * Define a blank "Home"/Start page via `Triangle > Tools > Home Page > Use Blank Page`.
     Necessary to make sure that later no JavaScript is executed before a exploit.
   * Reload "Home"/Start page via `Triangle > Home`.
-  * Go to [http://ps3xploit.com/][6] via `Start`, then add a bookmark for it via `Select`.
+  * Go to [https://www.ps3xploit.me/][6] via `Start`, then add a bookmark for it via `Select`.
   * Prepare `act.dat` dump.
     * From the home page menu select `v3 HAN Tools > ACT/IDPS Dumper`, then add a bookmark for it via `Select`.
     * Go back to its main page via `L2` or through its bookmark via `Select`.
@@ -430,12 +430,12 @@ Errors may occur when activating a lot of titles in a short time, see [Activate 
 * Write the version into the information text file for the related console, e.g. \03-nnnnnnnn-nnnnnnn-CExxxxxxx\information.txt.
 
 
-[1]: http://www.ridgecrop.demon.co.uk/fat32format.htm "Ridgecrop Consultants Ltd. - fat32format utility"
+[1]: http://ridgecrop.co.uk/fat32format.htm "Ridgecrop Consultants Ltd. - fat32format utility"
 [2]: https://www.reddit.com/r/ps3homebrew/wiki/how_to_hack "Reddit Wiki - Console Hack Compatibility"
 [3]: https://www.psdevwiki.com/ps3/SKU_Models "PS Dev Wiki - Console Model/SKU List"
 [4]: https://darthsternie.net/ps3-firmwares/ "Darthsternie's Firmware Archive - PS3"
 [5]: https://www.psx-place.com/threads/23094/ "PSX-Place Forum - Hybrid Firmware 4.86/4.85/4.84"
-[6]: http://ps3xploit.com/ "PS3Xploit Home Page"
+[6]: https://www.ps3xploit.me/ "PS3Xploit Home Page"
 [7]: https://www.psx-place.com/threads/21448/ "PSX-Place Forum - PS3Xport"
 [8]: https://www.psx-place.com/threads/24890/ "PSX-Place Forum - Bug report for IDPS dumper"
 [9]: https://www.playstation.com/en-gb/get-help/#!/error-code/ "Sony PlayStation Help - PlayStation Error Code"
@@ -454,5 +454,5 @@ Errors may occur when activating a lot of titles in a short time, see [Activate 
 [22]: https://support.playstation.com/s/article/Restore-PS3-Default-Settings?language=en_US "PS3 Support - Restore PS3 Default Settings"
 [23]: https://manuals.playstation.net/document/en/ps3/current/settings/restore.html "PS3 Manual - Restore Default Settings"
 [24]: https://manuals.playstation.net/document/en/ps3/current/settings/restoreps3.html "PS3 Manual - Restore PS3 System"
-[25]: https://www.ps3xploit.net/ "bguerville's PlayStation 3 Toolset"
+[25]: https://www.ps3toolset.com/ "bguerville's PlayStation 3 Toolset"
 [26]: https://hexed.it/ "HexEd.it Online Hex-Editor"
